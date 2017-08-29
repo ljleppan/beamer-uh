@@ -1,0 +1,126 @@
+% Leo Leppänen, 2017-08-29
+
+\mode<presentation>
+
+% Different flames (logos)
+\def\flamefile{images/uh-general.png}
+\DeclareOptionBeamer{general}{
+  \def\flamefile{images/uh-general.png}
+}
+\DeclareOptionBeamer{agri}{
+  \def\flamefile{images/uh-agri.png}
+}
+\DeclareOptionBeamer{arts}{
+  \def\flamefile{images/uh-arts.png}
+}
+\DeclareOptionBeamer{behav}{
+  \def\flamefile{images/uh-behav.png}
+}
+\DeclareOptionBeamer{bio}{
+  \def\flamefile{images/uh-bio.png}
+}
+\DeclareOptionBeamer{law}{
+  \def\flamefile{images/uh-law.png}
+}
+\DeclareOptionBeamer{med}{
+  \def\flamefile{images/uh-med.png}
+}
+\DeclareOptionBeamer{pharm}{
+  \def\flamefile{images/uh-pharm.png}
+}
+\DeclareOptionBeamer{sci}{
+  \def\flamefile{images/uh-sci.png}
+}
+\DeclareOptionBeamer{soc}{
+  \def\flamefile{images/uh-soc.png}
+}
+\DeclareOptionBeamer{sockom}{
+  \def\flamefile{images/uh-sockom.png}
+}
+\DeclareOptionBeamer{theo}{
+  \def\flamefile{images/uh-theo.png}
+}
+\DeclareOptionBeamer{vet}{
+  \def\flamefile{images/uh-vet.png}
+}
+
+\ProcessOptionsBeamer
+
+% All fonts should be black
+\setbeamercolor{normal text}{bg=white,fg=black}
+\setbeamercolor{structure}{fg=black}
+
+% Disable navigation
+\setbeamertemplate{navigation symbols}{}
+
+% Circles for first two levels of itemized lists
+% and a dash for the third.
+\setbeamertemplate{itemize item}[circle]
+\setbeamertemplate{itemize subitem}[circle]
+\defbeamertemplate{itemize subsubitem}{dash}{-}
+\setbeamertemplate{itemize subsubitem}[dash]
+
+% Grey slide background
+\usebackgroundtemplate{
+  \parbox[c][0.9\paperheight][c]{\paperwidth}{\centering\includegraphics[width=0.95\paperwidth, height=0.83\paperheight]{images/background.png}}
+}
+
+% Required for flame positioning
+\usepackage{textpos}
+
+% Flame, as used in normal slides
+\newcommand{\flame}{
+  \setlength{\TPHorizModule}{1pt}
+  \setlength{\TPVertModule}{1pt}
+  \begin{textblock}{10}(-15,-15)
+    \includegraphics[width=50pt,height=50pt]{\flamefile}
+  \end{textblock}
+} 
+
+% Flame, as used in the title slide
+\newcommand{\titleflame}{
+  \setlength{\TPHorizModule}{1pt}
+  \setlength{\TPVertModule}{1pt}
+  \begin{textblock}{10}(-15,8)
+    \includegraphics[width=60pt,height=60pt]{\flamefile}
+  \end{textblock}
+} 
+
+% Template for the title page
+\setbeamertemplate{title page}{
+  \titleflame    
+  \vfill    
+  \vspace{2cm}
+  \begin{center}
+    \textbf{\Large{\MakeUppercase \inserttitle}}\\
+    \vspace{.3cm}
+    \textbf{\large{\MakeUppercase \insertsubtitle}}\\
+    \vspace{.3cm}
+    \footnotesize{\insertauthor}
+  \end{center}
+  \par\vfill
+}
+
+% Template for the footer, present on all pages
+\setbeamertemplate{footline}{
+  \begin{beamercolorbox}[leftskip=.3cm,rightskip=.3cm]{author in head/foot}
+    \vspace*{0.1cm}
+    \textbf{HELSINGIN YLIOPISTO} \newline \vspace*{0.1cm}
+    \textbf{HELSINGFORS UNIVERSITET} \newline \vspace*{0.2cm}
+    \textbf{UNIVERSITY OF HELSINKI} \hfill \insertinstitute \hfill \insertshortauthor \hfill \insertdate \hfill \insertframenumber / \inserttotalframenumber 
+    \par
+    \vspace*{0.1cm}
+  \end{beamercolorbox}
+}
+
+% Template for the non-tile frames' header
+\setbeamertemplate{frametitle}{
+  \vspace{1cm}
+  \flame
+  \begin{beamercolorbox}[dp=0.5cm, leftskip=2cm,rightskip=.3cm]{frametitle}
+    \textbf{\Large{\MakeUppercase{\insertframetitle}}}
+  \end{beamercolorbox}
+}
+
+\mode
+<all>

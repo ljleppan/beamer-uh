@@ -1,0 +1,115 @@
+% Remove 't' to vertically align content within slides.
+\documentclass[12pt, t]{beamer}
+
+% Fonts are difficult with pdflatex. We're supposed to use Arial, 
+% but that pretty much requires XeLaTeX or similar. As Arial is
+% really just a Helvetica clone and we do have access to Helvetica,
+% we'll just roll with that instead. It looks "close enough" for
+% most purposes.
+\usepackage{helvet}
+
+% In case you have Arial installed, you can probably comment out the 
+% above line, uncomment the two below lines and compile with XeLaTeX.
+%\usepackage{fontspec}
+%\setmainfont{Arial}
+
+% Default to UTF8 input encoding: plenty of non-ASCII characters
+% in Finnish names etc.
+\usepackage[utf8]{inputenc}
+
+% Defaults language to English.
+\usepackage[english]{babel}
+
+% Used for dummy text only, can be safely removed
+% once \lipsum's are removed from body.
+\usepackage{lipsum}
+
+% Possible options (select 1):
+%    general - General university theming
+%    agri - Faculty of Agriculture and Forestry
+%    arts - Faculty of Arts
+%    behav - Faculty of Educational Sciences
+%    bio - Faculty of Biological and Environmental Sciences
+%    law - Faculty of Law
+%    med - Faculty of Medicine
+%    pharm - Faculty of Pharmacy
+%    sci - Faculty of Science
+%    soc - Faculty of Social Sciences
+%    sockom - Swedish School of Social Science
+%    theo - Faculty of Theology
+%    vet - Faculty of Veterinary Medicine
+% Using no options is the same as setting "general"
+\usetheme[sci]{unihel}
+
+% Title of your presentation
+\title{presentation title that is super long and goes 2 lines}
+
+% Subtitle of your presentation, optional
+\subtitle{subtitle}
+
+% Name in square brackets is used in footer
+% Name in curly brackets is used on title page
+\author[Leppänen et al.]{Leo Leppänen}
+
+% Set to department or similar unit
+\institute{Department of Computer Science}
+
+% Date can be anything.
+% Comment out or use \today for today's date.
+\date{Conf'2017}
+
+\begin{document}
+\maketitle
+
+\begin{frame}{Outline}
+    \begin{center}
+        \tableofcontents[hideallsubsections]
+    \end{center}
+\end{frame}
+
+%%-------------------%%
+%% MAIN MATTER START %%
+%%-------------------%%
+
+\section{Section 1}
+
+\begin{frame}{A frame with a super long title that will not fit on one line at all}
+    Some frame contents
+\end{frame}
+
+\section{Section 2}
+
+\begin{frame}{Example of an itemized list}
+    \begin{itemize}
+        \item Level 1
+        \begin{itemize}
+            \item Level 2
+            \begin{itemize}
+                \item Level 3
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+% NB: subsection and subsubsections are not show on the TOC
+\subsection{Subsection 2.1}
+
+\begin{frame}{An enumerated list}
+    \begin{enumerate}
+        \item Level 1
+        \begin{enumerate}
+            \item Level 2
+            \begin{enumerate}
+                \item Level 3
+            \end{enumerate}
+        \end{enumerate}
+    \end{enumerate}
+\end{frame}
+
+\subsubsection{Subsubsection 2.1.1}
+
+\begin{frame}{A slide with lots of content}
+    \lipsum[2]
+\end{frame}
+
+\end{document}
