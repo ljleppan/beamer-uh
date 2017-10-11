@@ -1,4 +1,5 @@
-# beamer-uh -- A Beamer theme styled after the University of Helsinki powerpoint theme
+# beamer-uh 
+## A Beamer theme styled after the University of Helsinki powerpoint theme
 
 Main features:
 1) Works with both 16:9 and 4:3
