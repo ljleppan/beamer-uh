@@ -2,6 +2,6 @@
 
 Main features:
 1) Works with both 16:9 and 4:3
-2) Support for the colors of all departments
+2) Support for the colors of all faculties
 
 See `example.tex` and`example.pdf` for example.
