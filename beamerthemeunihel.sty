@@ -118,13 +118,29 @@
 }
 
 % Template for the non-tile frames' header
+\usepackage{textcase,regexpatch}
 \setbeamertemplate{frametitle}{
+  \makeatletter %from https://tex.stackexchange.com/a/149238
+  \regexpatchcmd{\insertframetitle}
+    {(\c{usebeamertemplate}.*)\c{fi}}
+    {\c{NoCaseChange}\cB\{\1\cE\}\c{fi}}
+    {}{}%
+  \makeatother
   \vspace{1cm}
   \flame
   \begin{beamercolorbox}[dp=0.5cm, leftskip=2cm,rightskip=.3cm, wd=\dimexpr\paperwidth - 2.5cm\relax]{frametitle}
-    \textbf{\Large{\MakeUppercase{\insertframetitle}}}
+    \textbf{\Large{\MakeTextUppercase{\insertframetitle}}}
   \end{beamercolorbox}
 }
+
+% Minor adjustments to bibliography
+\setbeamertemplate{bibliography item}{\insertbiblabel} %or theenumiv 
+\setbeamerfont{bibliography item}{size=\scriptsize} % or tiny or  footnotesize
+\setbeamerfont{bibliography entry author}{size=\scriptsize}
+\setbeamerfont{bibliography entry title}{size=\scriptsize}
+\setbeamerfont{bibliography entry location}{size=\scriptsize}
+\setbeamerfont{bibliography entry address}{size=\scriptsize}
+\setbeamerfont{bibliography entry note}{size=\scriptsize}
 
 \mode
 <all>
