@@ -3,46 +3,94 @@
 
 \mode<presentation>
 
+\RequirePackage{xcolor}  % \colorlet depends on xcolor
+
+% Define the official university colours, one for each faculty
+% These are all given a name so they can be easily used in presentations
+% The colour "fac" is defined as the current faculty's colour,
+%  depending on the faculty options
+
+% The official "silver" to be used in the university logo
+\definecolor{uh silver}{RGB}{140,140,140}
+% Faculty of Arts
+\definecolor{fac arts}{RGB}{58,117,196}
+% Faculty of Science
+\definecolor{fac sci}{RGB}{252,163,17}
+% Faculty of Vetinary Medicine
+\definecolor{fac vet}{RGB}{0,158,96}
+% Faculty of Behavioural Sciences
+\definecolor{fac behav}{RGB}{252,209,22}
+% Faculty of Theology
+\definecolor{fac theo}{RGB}{146,88,200}
+% Faculty of Law
+\definecolor{fac law}{RGB}{140,0,50}
+% Faculty of Social Sciences
+\definecolor{fac soc}{RGB}{229,5,58}
+% Faculty of Agriculture and Forestry
+\definecolor{fac agr}{RGB}{0,176,140}
+% Faculty of Medicine
+\definecolor{fac med}{RGB}{0,163,154}
+% Faculty of Pharmacy
+\definecolor{fac pharm}{RGB}{0,189,157}
+% Faculty of Biological and Environmental Sciences
+\definecolor{fac bio}{RGB}{91,191,33}
+% Swedish School of Social Sciences
+\definecolor{fac sockom}{RGB}{230,51,117}
+
+
 % Different flames (logos)
 \def\flamefile{images/uh-general.png}
+\colorlet{fac}{uh silver}
 \DeclareOptionBeamer{general}{
   \def\flamefile{images/uh-general.png}
 }
 \DeclareOptionBeamer{agri}{
   \def\flamefile{images/uh-agri.png}
+  \colorlet{fac}{fac agri}
 }
 \DeclareOptionBeamer{arts}{
   \def\flamefile{images/uh-arts.png}
+  \colorlet{fac}{fac arts}
 }
 \DeclareOptionBeamer{behav}{
   \def\flamefile{images/uh-behav.png}
+  \colorlet{fac}{fac behav}
 }
 \DeclareOptionBeamer{bio}{
   \def\flamefile{images/uh-bio.png}
+  \colorlet{fac}{fac bio}
 }
 \DeclareOptionBeamer{law}{
   \def\flamefile{images/uh-law.png}
+  \colorlet{fac}{fac law}
 }
 \DeclareOptionBeamer{med}{
   \def\flamefile{images/uh-med.png}
+  \colorlet{fac}{fac med}
 }
 \DeclareOptionBeamer{pharm}{
   \def\flamefile{images/uh-pharm.png}
+  \colorlet{fac}{fac pharm}
 }
 \DeclareOptionBeamer{sci}{
   \def\flamefile{images/uh-sci.png}
+  \colorlet{fac}{fac sci}
 }
 \DeclareOptionBeamer{soc}{
   \def\flamefile{images/uh-soc.png}
+  \colorlet{fac}{fac soc}
 }
 \DeclareOptionBeamer{sockom}{
   \def\flamefile{images/uh-sockom.png}
+  \colorlet{fac}{fac sockom}
 }
 \DeclareOptionBeamer{theo}{
   \def\flamefile{images/uh-theo.png}
+  \colorlet{fac}{fac theo}
 }
 \DeclareOptionBeamer{vet}{
   \def\flamefile{images/uh-vet.png}
+  \colorlet{fac}{fac vet}
 }
 
 \ProcessOptionsBeamer
@@ -79,7 +127,7 @@
   \begin{textblock}{10}(-25,-25)
     \includegraphics[width=75pt,height=75pt]{\flamefile}
   \end{textblock}
-} 
+}
 
 % Flame, as used in the title slide
 \newcommand{\titleflame}{
@@ -88,12 +136,12 @@
   \begin{textblock}{10}(-25,-2)
     \includegraphics[width=75pt,height=75pt]{\flamefile}
   \end{textblock}
-} 
+}
 
 % Template for the title page
 \setbeamertemplate{title page}{
-  \titleflame    
-  \vfill    
+  \titleflame
+  \vfill
   \vspace{2cm}
   \begin{center}
     \textbf{\Large{\MakeUppercase \inserttitle}}\\
@@ -111,7 +159,7 @@
     \vspace*{0.1cm}
     \textbf{HELSINGIN YLIOPISTO} \newline \vspace*{0.1cm}
     \textbf{HELSINGFORS UNIVERSITET} \newline \vspace*{0.2cm}
-    \textbf{UNIVERSITY OF HELSINKI} \hfill \insertinstitute \hfill \insertshortauthor \hfill \insertdate \hfill \insertframenumber / \inserttotalframenumber 
+    \textbf{UNIVERSITY OF HELSINKI} \hfill \insertinstitute \hfill \insertshortauthor \hfill \insertdate \hfill \insertframenumber / \inserttotalframenumber
     \par
     \vspace*{0.1cm}
   \end{beamercolorbox}
@@ -137,13 +185,18 @@
 \addtobeamertemplate{footnote}{}{\vspace{2ex}}
 
 % Minor adjustments to bibliography
-\setbeamertemplate{bibliography item}{\insertbiblabel} %or theenumiv 
+\setbeamertemplate{bibliography item}{\insertbiblabel} %or theenumiv
 \setbeamerfont{bibliography item}{size=\scriptsize} % or tiny or  footnotesize
 \setbeamerfont{bibliography entry author}{size=\scriptsize}
 \setbeamerfont{bibliography entry title}{size=\scriptsize}
 \setbeamerfont{bibliography entry location}{size=\scriptsize}
 \setbeamerfont{bibliography entry address}{size=\scriptsize}
 \setbeamerfont{bibliography entry note}{size=\scriptsize}
+
+% Set blocks to use the faculty's colour in the title
+\setbeamercolor{block title}{use=structure,fg=white,bg=fac}
+\setbeamercolor{block body}{use=structure,fg=black,bg=white}
+
 
 \mode
 <all>
