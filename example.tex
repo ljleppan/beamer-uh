@@ -112,6 +112,17 @@
     \lipsum[2]
 \end{frame}
 
+% NB: The [c] makes the frame vertically centered even if
+% the default on first line of this file is 't'.
+\begin{frame}[c]{A frame with blocks}
+	% The blocks will be colored accoring to the faculty color scheme
+	\begin{block}{Block with math}
+		$\mathbf{X} = \{1, 2, 3\}$
+	\end{block}
+	\begin{block}{Block with text}
+		Some text
+	\end{block}
+\end{frame}
 
 \begin{frame}{Slide with references}
 	\centering \cite{upper1974unsuccessful, didden2007multisite}
