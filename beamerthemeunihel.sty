@@ -153,13 +153,18 @@
   \par\vfill
 }
 
+\newif\if@hideframenums
+\@hideframenumsfalse
+\newcommand{\hideframenums}{\@hideframenumstrue}
+\newcommand{\showframenums}{\@hideframenumsfalse}
+
 % Template for the footer, present on all pages
 \setbeamertemplate{footline}{
   \begin{beamercolorbox}[leftskip=.3cm,rightskip=.3cm]{author in head/foot}
     \vspace*{0.1cm}
     \textbf{HELSINGIN YLIOPISTO} \newline \vspace*{0.1cm}
     \textbf{HELSINGFORS UNIVERSITET} \newline \vspace*{0.2cm}
-    \textbf{UNIVERSITY OF HELSINKI} \hfill \insertinstitute \hfill \insertshortauthor \hfill \insertdate \hfill \insertframenumber / \inserttotalframenumber
+    \textbf{UNIVERSITY OF HELSINKI} \hfill \insertinstitute \hfill \insertshortauthor \hfill \insertdate \hfill \if@hideframenums\relax\else\insertframenumber / \inserttotalframenumber\fi
     \par
     \vspace*{0.1cm}
   \end{beamercolorbox}
