@@ -11,3 +11,4 @@ See `example.tex` and`example.pdf` for example.
 
 A special thanks to the following collaborators for their feedback and the fixes they have submitted:
 - [Khalid Al­na­j­jar](https://github.com/mokha)
+- [Mark Granroth-Wilding](https://github.com/markgw)
