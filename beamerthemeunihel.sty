@@ -170,7 +170,7 @@
   \end{beamercolorbox}
 }
 
-% Template for the non-tile frames' header
+% Template for the non-title frames' header
 \usepackage{textcase,regexpatch}
 \setbeamertemplate{frametitle}{
   \makeatletter %from https://tex.stackexchange.com/a/149238
@@ -180,8 +180,8 @@
     {}{}%
   \makeatother
   \vspace{1cm}
-  \flame
-  \begin{beamercolorbox}[dp=0.5cm, leftskip=2cm,rightskip=.3cm, wd=\dimexpr\paperwidth - 2.5cm\relax]{frametitle}
+  \flame\hspace*{50pt}
+  \begin{beamercolorbox}[dp=0.5cm, wd=\dimexpr\paperwidth - 3.3cm\relax]{frametitle}
     \textbf{\Large{\MakeTextUppercase{\insertframetitle}}}
   \end{beamercolorbox}
 }
