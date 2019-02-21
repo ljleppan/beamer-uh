@@ -164,15 +164,17 @@
     \vspace*{0.1cm}
     \textbf{HELSINGIN YLIOPISTO} \newline \vspace*{0.1cm}
     \textbf{HELSINGFORS UNIVERSITET} \newline \vspace*{0.2cm}
-    \textbf{UNIVERSITY OF HELSINKI} \hfill \insertinstitute \hfill \insertshortauthor \hfill \insertdate \hfill \if@hideframenums\relax\else\insertframenumber / \inserttotalframenumber\fi
+    \textbf{UNIVERSITY OF HELSINKI} \hfill \insertshortinstitute \hfill \insertshortauthor \hfill \insertdate \hfill \if@hideframenums\relax\else\insertframenumber / \inserttotalframenumber\fi
     \par
     \vspace*{0.1cm}
   \end{beamercolorbox}
 }
 
 % Template for the non-title frames' header
+% Default as the template named "default" so that we can easily switch
+% between this and other templates
 \usepackage{textcase,regexpatch}
-\setbeamertemplate{frametitle}{
+\defbeamertemplate{frametitle}{uhdefault}{%
   \makeatletter %from https://tex.stackexchange.com/a/149238
   \regexpatchcmd{\insertframetitle}
     {(\c{usebeamertemplate}.*)\c{fi}}
@@ -181,10 +183,17 @@
   \makeatother
   \vspace{1cm}
   \flame\hspace*{50pt}
-  \begin{beamercolorbox}[dp=0.5cm, wd=\dimexpr\paperwidth - 3.3cm\relax]{frametitle}
+  \begin{beamercolorbox}[dp=0.3cm, wd=\dimexpr\paperwidth - 3.3cm\relax]{frametitle}
     \textbf{\Large{\MakeTextUppercase{\insertframetitle}}}
+  \end{beamercolorbox}%
+  \par\hspace*{55pt}%
+  \begin{beamercolorbox}[dp=0.2cm, wd=\dimexpr\paperwidth - 3.3cm\relax]{framesubtitle}
+    \ifx\insertframesubtitle\@empty\else%
+    \textit{\large\insertframesubtitle}
+    \fi%
   \end{beamercolorbox}
 }
+\setbeamertemplate{frametitle}[uhdefault]
 
 % Adjust footnote position
 \addtobeamertemplate{footnote}{}{\vspace{2ex}}
@@ -200,7 +209,11 @@
 
 % Set blocks to use the faculty's colour in the title
 \setbeamercolor{block title}{use=structure,fg=white,bg=fac}
+\setbeamercolor{block title example}{parent=normal,fg=white,bg=fac}
 \setbeamercolor{block body}{use=structure,fg=black,bg=white}
+\setbeamercolor{block body example}{parent=normal,fg=black,bg=white}
+
+\setbeamerfont{block title}{size=\footnotesize}
 
 
 \mode
