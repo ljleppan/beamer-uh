@@ -190,12 +190,13 @@
   \begin{beamercolorbox}[dp=0.3cm, wd=\dimexpr\paperwidth - 3.3cm\relax]{frametitle}
     \textbf{\Large{\MakeTextUppercase{\insertframetitle}}}
   \end{beamercolorbox}%
-  \par\hspace*{45pt}%
-  \begin{beamercolorbox}[dp=0.2cm, wd=\dimexpr\paperwidth - 3.3cm\relax]{framesubtitle}
-    \ifx\insertframesubtitle\@empty\else%
-    \textit{\large\insertframesubtitle}
-    \fi%
-  \end{beamercolorbox}
+  \par%
+  \ifx\insertframesubtitle\@empty\else%
+    \hspace*{45pt}%
+      \begin{beamercolorbox}[dp=0.2cm, wd=\dimexpr\paperwidth - 3.3cm\relax]{framesubtitle}
+        \textit{\large\insertframesubtitle}
+      \end{beamercolorbox}%
+  \fi%
 }
 \setbeamertemplate{frametitle}[uhdefault]
 
@@ -229,12 +230,13 @@
   \begin{beamercolorbox}[dp=0.3cm, wd=\dimexpr\paperwidth - 2.5cm\relax]{frametitle}
     \textbf{\Large{\MakeTextUppercase{\insertframetitle}}}
   \end{beamercolorbox}%
-  \par\hspace*{28pt}%
-  \begin{beamercolorbox}[dp=0.2cm, wd=\dimexpr\paperwidth - 2.5cm\relax]{framesubtitle}
-    \ifx\insertframesubtitle\@empty\else%
-    \textit{\large\insertframesubtitle}
-    \fi%
-  \end{beamercolorbox}
+  \par%
+  \ifx\insertframesubtitle\@empty\else%
+    \hspace*{45pt}%
+      \begin{beamercolorbox}[dp=0.2cm, wd=\dimexpr\paperwidth - 3.3cm\relax]{framesubtitle}
+        \textit{\large\insertframesubtitle}
+      \end{beamercolorbox}%
+  \fi%
 }
 
 % By default, use the default UH title for every frame
