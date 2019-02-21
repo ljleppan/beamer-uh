@@ -1,14 +1,14 @@
 % Remove 't' to vertically align content within slides.
 \documentclass[12pt, t]{beamer}
 
-% Fonts are difficult with pdflatex. We're supposed to use Arial, 
+% Fonts are difficult with pdflatex. We're supposed to use Arial,
 % but that pretty much requires XeLaTeX or similar. As Arial is
 % really just a Helvetica clone and we do have access to Helvetica,
 % we'll just roll with that instead. It looks "close enough" for
 % most purposes.
 \usepackage{helvet}
 
-% In case you have Arial installed, you can probably comment out the 
+% In case you have Arial installed, you can probably comment out the
 % above line, uncomment the two below lines and compile with XeLaTeX.
 %\usepackage{fontspec}
 %\setmainfont{Arial}
@@ -110,6 +110,27 @@
 
 \begin{frame}{A slide with lots of content}
     \lipsum[2]
+\end{frame}
+
+\begin{frame}[smalltitle]{A slide with a smaller title}
+  \textit{Using the \texttt{smalltitle} option gives a smaller UH flame,
+  leaving more space for your content...}
+
+  \vspace{10pt}
+
+  \lipsum[4]
+\end{frame}
+
+\begin{frame}[fragile]{A slide with a subtitle}
+  \framesubtitle{Concerning the use of subtitles}
+
+  Use the \verb#\framesubtitle# command to add a subtitle
+  underneath your frame's main title.
+
+  \vfill
+
+  Note also that we used \verb#fragile# on this slide: otherwise
+  the \verb#\verb# command doesn't work.
 \end{frame}
 
 % NB: The [c] makes the frame vertically centered even if

@@ -4,6 +4,7 @@
 \mode<presentation>
 
 \RequirePackage{xcolor}  % \colorlet depends on xcolor
+\RequirePackage{etoolbox}  % Needed for switching between frame layouts
 
 % Define the official university colours, one for each faculty
 % These are all given a name so they can be easily used in presentations
@@ -185,11 +186,11 @@
     {}{}%
   \makeatother
   \vspace{1cm}
-  \flame\hspace*{50pt}
+  \flame\hspace*{40pt}
   \begin{beamercolorbox}[dp=0.3cm, wd=\dimexpr\paperwidth - 3.3cm\relax]{frametitle}
     \textbf{\Large{\MakeTextUppercase{\insertframetitle}}}
   \end{beamercolorbox}%
-  \par\hspace*{55pt}%
+  \par\hspace*{45pt}%
   \begin{beamercolorbox}[dp=0.2cm, wd=\dimexpr\paperwidth - 3.3cm\relax]{framesubtitle}
     \ifx\insertframesubtitle\@empty\else%
     \textit{\large\insertframesubtitle}
@@ -197,6 +198,59 @@
   \end{beamercolorbox}
 }
 \setbeamertemplate{frametitle}[uhdefault]
+
+
+
+% Flame, small version
+\pgfdeclareimage[width=45pt]{small flame}{\flamefile}
+\newcommand{\smallflame}{
+  \setlength{\TPHorizModule}{1pt}
+  \setlength{\TPVertModule}{1pt}
+  \begin{textblock}{10}(-23.5,-17)
+    \pgfuseimage{small flame}
+  \end{textblock}
+}
+
+
+
+% Define another beamer template for the title, so
+% that we can select a version with a smaller flame
+% to give us more space.
+% Use key "smalltitle" to select for a frame
+\defbeamertemplate{frametitle}{smalltitle}{%
+  \makeatletter %from https://tex.stackexchange.com/a/149238
+  \regexpatchcmd{\insertframetitle}
+    {(\c{usebeamertemplate}.*)\c{fi}}
+    {\c{NoCaseChange}\cB\{\1\cE\}\c{fi}}
+    {}{}%
+  \makeatother
+  \vspace{0.8cm}
+  \smallflame\hspace*{25pt}
+  \begin{beamercolorbox}[dp=0.3cm, wd=\dimexpr\paperwidth - 2.5cm\relax]{frametitle}
+    \textbf{\Large{\MakeTextUppercase{\insertframetitle}}}
+  \end{beamercolorbox}%
+  \par\hspace*{28pt}%
+  \begin{beamercolorbox}[dp=0.2cm, wd=\dimexpr\paperwidth - 2.5cm\relax]{framesubtitle}
+    \ifx\insertframesubtitle\@empty\else%
+    \textit{\large\insertframesubtitle}
+    \fi%
+  \end{beamercolorbox}
+}
+
+% By default, use the default UH title for every frame
+\BeforeBeginEnvironment{frame}{%
+  \setbeamertemplate{frametitle}[uhdefault]%
+}
+
+% Define the frame key to select the smalltitle version
+\makeatletter
+\define@key{beamerframe}{smalltitle}[true]{%
+    \setbeamertemplate{frametitle}[smalltitle]%
+}
+\makeatother
+
+
+
 
 % Adjust footnote position
 \addtobeamertemplate{footnote}{}{\vspace{2ex}}
