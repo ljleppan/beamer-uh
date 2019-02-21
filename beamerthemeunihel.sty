@@ -5,6 +5,7 @@
 
 \RequirePackage{xcolor}  % \colorlet depends on xcolor
 \RequirePackage{etoolbox}  % Needed for switching between frame layouts
+\RequirePackage{tikz}
 
 % Define the official university colours, one for each faculty
 % These are all given a name so they can be easily used in presentations
@@ -37,6 +38,8 @@
 \definecolor{fac bio}{RGB}{91,191,33}
 % Swedish School of Social Sciences
 \definecolor{fac sockom}{RGB}{230,51,117}
+
+\definecolor{background}{RGB}{244,244,244}
 
 
 % Different flames (logos)
@@ -114,8 +117,16 @@
 \setbeamertemplate{itemize subsubitem}[dash]
 
 % Grey slide background
-\usebackgroundtemplate{
-  \parbox[c][0.9\paperheight][c]{\paperwidth}{\centering\includegraphics[width=0.95\paperwidth, height=0.83\paperheight]{images/background.png}}
+% This is created by a big filled tikz node
+% Its colour is defined by the colour "background"
+% It's called "grey background", so you can position things relative to it
+%  using that name
+\usebackgroundtemplate{%
+  \parbox[c][0.9\paperheight][c]{\paperwidth}{%
+    \centering %
+    \tikz %
+      \node (grey background) [text width=0.931\paperwidth, text height=0.803\paperheight, fill=background] {};%
+  }%
 }
 
 % Required for flame positioning
