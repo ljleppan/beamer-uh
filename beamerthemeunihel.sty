@@ -121,20 +121,23 @@
 \usepackage{textpos}
 
 % Flame, as used in normal slides
+% Declare a PGF image to reduce file size and processing times
+\pgfdeclareimage[width=2.05cm]{normal flame}{\flamefile}
 \newcommand{\flame}{
   \setlength{\TPHorizModule}{1pt}
   \setlength{\TPVertModule}{1pt}
-  \begin{textblock}{10}(-25,-25)
-    \includegraphics[width=75pt,height=75pt]{\flamefile}
+  \begin{textblock}{10}(-24.5,-23.9)
+    \pgfuseimage{normal flame}
   \end{textblock}
 }
 
 % Flame, as used in the title slide
+\pgfdeclareimage[width=3.21cm]{title flame}{\flamefile}
 \newcommand{\titleflame}{
   \setlength{\TPHorizModule}{1pt}
   \setlength{\TPVertModule}{1pt}
   \begin{textblock}{10}(-25,-2)
-    \includegraphics[width=75pt,height=75pt]{\flamefile}
+    \pgfuseimage{title flame}
   \end{textblock}
 }
 
