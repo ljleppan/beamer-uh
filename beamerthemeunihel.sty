@@ -175,11 +175,14 @@
 
 % Template for the footer, present on all pages
 \setbeamertemplate{footline}{
-  \begin{beamercolorbox}[leftskip=.3cm,rightskip=.3cm]{author in head/foot}
-    \vspace*{0.1cm}
-    \textbf{HELSINGIN YLIOPISTO} \newline \vspace*{0.1cm}
-    \textbf{HELSINGFORS UNIVERSITET} \newline \vspace*{0.2cm}
-    \textbf{UNIVERSITY OF HELSINKI} \hfill \insertshortinstitute \hfill \insertshortauthor \hfill \insertdate \hfill \if@hideframenums\relax\else\insertframenumber / \inserttotalframenumber\fi
+  \begin{beamercolorbox}[leftskip=.3cm,rightskip=.3cm]{author in head/foot}%
+    \vspace*{0.1cm}%
+    \parbox[b]{3.5cm}{\parindent = 0pt
+        \textbf{HELSINGIN YLIOPISTO} \vspace*{0.05cm}\newline%
+        \textbf{HELSINGFORS UNIVERSITET} \vspace*{0.05cm}\newline%
+        \textbf{UNIVERSITY OF HELSINKI}
+    }%
+    \insertshortinstitute \hfill \insertshortauthor \hfill \insertdate \hfill \if@hideframenums\relax\else\insertframenumber / \inserttotalframenumber\fi%
     \par
     \vspace*{0.1cm}
   \end{beamercolorbox}
