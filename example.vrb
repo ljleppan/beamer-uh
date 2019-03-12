@@ -1,0 +1,10 @@
+\frametitle{A slide with a subtitle}
+\framesubtitle{Concerning the use of subtitles}
+
+  Use the \verb#\framesubtitle# command to add a subtitle
+  underneath your frame's main title.
+
+  \vfill
+
+  Note also that we used \verb#fragile# on this slide: otherwise
+  the \verb#\verb# command doesn't work.

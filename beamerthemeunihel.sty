@@ -43,57 +43,57 @@
 
 
 % Different flames (logos)
-\def\flamefile{images/uh-general.png}
+\def\flamefile{images/uh-general-trim.png}
 \colorlet{fac}{uh silver}
 \DeclareOptionBeamer{general}{
-  \def\flamefile{images/uh-general.png}
+  \def\flamefile{images/uh-general-trim.png}
 }
 \DeclareOptionBeamer{agri}{
-  \def\flamefile{images/uh-agri.png}
+  \def\flamefile{images/uh-agri-trim.png}
   \colorlet{fac}{fac agri}
 }
 \DeclareOptionBeamer{arts}{
-  \def\flamefile{images/uh-arts.png}
+  \def\flamefile{images/uh-arts-trim.png}
   \colorlet{fac}{fac arts}
 }
 \DeclareOptionBeamer{behav}{
-  \def\flamefile{images/uh-behav.png}
+  \def\flamefile{images/uh-behav-trim.png}
   \colorlet{fac}{fac behav}
 }
 \DeclareOptionBeamer{bio}{
-  \def\flamefile{images/uh-bio.png}
+  \def\flamefile{images/uh-bio-trim.png}
   \colorlet{fac}{fac bio}
 }
 \DeclareOptionBeamer{law}{
-  \def\flamefile{images/uh-law.png}
+  \def\flamefile{images/uh-law-trim.png}
   \colorlet{fac}{fac law}
 }
 \DeclareOptionBeamer{med}{
-  \def\flamefile{images/uh-med.png}
+  \def\flamefile{images/uh-med-trim.png}
   \colorlet{fac}{fac med}
 }
 \DeclareOptionBeamer{pharm}{
-  \def\flamefile{images/uh-pharm.png}
+  \def\flamefile{images/uh-pharm-trim.png}
   \colorlet{fac}{fac pharm}
 }
 \DeclareOptionBeamer{sci}{
-  \def\flamefile{images/uh-sci.png}
+  \def\flamefile{images/uh-sci-trim.png}
   \colorlet{fac}{fac sci}
 }
 \DeclareOptionBeamer{soc}{
-  \def\flamefile{images/uh-soc.png}
+  \def\flamefile{images/uh-soc-trim.png}
   \colorlet{fac}{fac soc}
 }
 \DeclareOptionBeamer{sockom}{
-  \def\flamefile{images/uh-sockom.png}
+  \def\flamefile{images/uh-sockom-trim.png}
   \colorlet{fac}{fac sockom}
 }
 \DeclareOptionBeamer{theo}{
-  \def\flamefile{images/uh-theo.png}
+  \def\flamefile{images/uh-theo-trim.png}
   \colorlet{fac}{fac theo}
 }
 \DeclareOptionBeamer{vet}{
-  \def\flamefile{images/uh-vet.png}
+  \def\flamefile{images/uh-vet-trim.png}
   \colorlet{fac}{fac vet}
 }
 
@@ -129,43 +129,32 @@
   }%
 }
 
-% Required for flame positioning
-\usepackage{textpos}
-
 % Flame, as used in normal slides
 % Declare a PGF image to reduce file size and processing times
 \pgfdeclareimage[width=2.05cm]{normal flame}{\flamefile}
-\newcommand{\flame}{
-  \setlength{\TPHorizModule}{1pt}
-  \setlength{\TPVertModule}{1pt}
-  \begin{textblock}{10}(-24.5,-23.9)
-    \pgfuseimage{normal flame}
-  \end{textblock}
-}
+\newcommand{\flame}{\pgfuseimage{normal flame}}
 
 % Flame, as used in the title slide
 \pgfdeclareimage[width=3.21cm]{title flame}{\flamefile}
-\newcommand{\titleflame}{
-  \setlength{\TPHorizModule}{1pt}
-  \setlength{\TPVertModule}{1pt}
-  \begin{textblock}{10}(-25,-2)
-    \pgfuseimage{title flame}
-  \end{textblock}
-}
+\newcommand{\titleflame}{\pgfuseimage{title flame}}
 
 % Template for the title page
 \setbeamertemplate{title page}{
-  \titleflame
-  \vfill
-  \vspace{2cm}
-  \begin{center}
-    \textbf{\Large{\MakeUppercase \inserttitle}}\\
-    \vspace{.3cm}
-    \textbf{\large{\MakeUppercase \insertsubtitle}}\\
-    \vspace{.3cm}
-    \footnotesize{\insertauthor}
-  \end{center}
-  \par\vfill
+    % Place the flame in the top left corner
+    \tikz[overlay, remember picture]
+        \node[outer sep=0cm, inner sep=0cm, anchor=north west, xshift=0.3cm, yshift=-0.325cm]
+            at (current page.north west)
+            {\titleflame};
+    \vspace{2.6cm}
+    \vfil
+    \begin{center}
+        \textbf{\Large{\MakeUppercase \inserttitle}}\\
+        \vspace{.3cm}
+        \textbf{\large{\MakeUppercase \insertsubtitle}}\\
+        \vspace{.3cm}
+        \footnotesize{\insertauthor}
+    \end{center}
+    \vfill
 }
 
 \newif\if@hideframenums
@@ -193,24 +182,29 @@
 % between this and other templates
 \usepackage{textcase,regexpatch}
 \defbeamertemplate{frametitle}{uhdefault}{%
-  \makeatletter %from https://tex.stackexchange.com/a/149238
-  \regexpatchcmd{\insertframetitle}
-    {(\c{usebeamertemplate}.*)\c{fi}}
-    {\c{NoCaseChange}\cB\{\1\cE\}\c{fi}}
-    {}{}%
-  \makeatother
-  \vspace{1cm}
-  \flame\hspace*{40pt}
-  \begin{beamercolorbox}[dp=0.3cm, wd=\dimexpr\paperwidth - 3.3cm\relax]{frametitle}
-    \textbf{\Large{\MakeTextUppercase{\insertframetitle}}}
-  \end{beamercolorbox}%
-  \par%
-  \ifx\insertframesubtitle\@empty\else%
+    % Place the flame at the top left corner of the grey box
+    \tikz[overlay, remember picture]
+        \node[outer sep=0cm, inner sep=0cm, anchor=north west] at (grey background.north west)
+            {\flame};%
+    \makeatletter %from https://tex.stackexchange.com/a/149238
+    \regexpatchcmd{\insertframetitle}
+        {(\c{usebeamertemplate}.*)\c{fi}}
+        {\c{NoCaseChange}\cB\{\1\cE\}\c{fi}}
+        {}{}%
+    \makeatother%
+    \vskip 0.5cm%
     \hspace*{45pt}%
-      \begin{beamercolorbox}[dp=0.2cm, wd=\dimexpr\paperwidth - 3.3cm\relax]{framesubtitle}
-        \textit{\large\insertframesubtitle}
-      \end{beamercolorbox}%
-  \fi%
+    \begin{beamercolorbox}[dp=0.3cm, wd=\dimexpr\paperwidth - 3.6cm\relax]{frametitle}
+        \textbf{\Large{\MakeTextUppercase{\insertframetitle}}}%
+    \end{beamercolorbox}%
+    \ifx\insertframesubtitle\@empty\else%
+        \par%
+        \hspace*{45pt}%
+        \begin{beamercolorbox}[dp=0.2cm, wd=\dimexpr\paperwidth - 3.6cm\relax]{framesubtitle}
+            \textit{\large\insertframesubtitle}
+        \end{beamercolorbox}%
+    \fi%
+    \par
 }
 \setbeamertemplate{frametitle}[uhdefault]
 
@@ -218,13 +212,7 @@
 
 % Flame, small version
 \pgfdeclareimage[width=45pt]{small flame}{\flamefile}
-\newcommand{\smallflame}{
-  \setlength{\TPHorizModule}{1pt}
-  \setlength{\TPVertModule}{1pt}
-  \begin{textblock}{10}(-23.5,-17)
-    \pgfuseimage{small flame}
-  \end{textblock}
-}
+\newcommand{\smallflame}{\pgfuseimage{small flame}}
 
 
 
@@ -233,24 +221,28 @@
 % to give us more space.
 % Use key "smalltitle" to select for a frame
 \defbeamertemplate{frametitle}{smalltitle}{%
-  \makeatletter %from https://tex.stackexchange.com/a/149238
-  \regexpatchcmd{\insertframetitle}
-    {(\c{usebeamertemplate}.*)\c{fi}}
-    {\c{NoCaseChange}\cB\{\1\cE\}\c{fi}}
-    {}{}%
-  \makeatother
-  \vspace{0.8cm}
-  \smallflame\hspace*{25pt}
-  \begin{beamercolorbox}[dp=0.3cm, wd=\dimexpr\paperwidth - 2.5cm\relax]{frametitle}
-    \textbf{\Large{\MakeTextUppercase{\insertframetitle}}}
-  \end{beamercolorbox}%
-  \par%
-  \ifx\insertframesubtitle\@empty\else%
-    \hspace*{45pt}%
-      \begin{beamercolorbox}[dp=0.2cm, wd=\dimexpr\paperwidth - 3.3cm\relax]{framesubtitle}
-        \textit{\large\insertframesubtitle}
-      \end{beamercolorbox}%
-  \fi%
+    % Place the flame at the top left corner of the grey box
+    \tikz[overlay, remember picture]
+        \node[outer sep=0cm, inner sep=0cm, anchor=north west] at (grey background.north west)
+            {\smallflame};%
+    \makeatletter %from https://tex.stackexchange.com/a/149238
+    \regexpatchcmd{\insertframetitle}%
+        {(\c{usebeamertemplate}.*)\c{fi}}
+        {\c{NoCaseChange}\cB\{\1\cE\}\c{fi}}
+        {}{}%
+    \makeatother%
+    \vskip 0.17cm%
+    \hspace*{30pt}%
+    \begin{beamercolorbox}[dp=0.3cm, wd=\dimexpr\paperwidth - 3.1cm\relax]{frametitle}
+        \textbf{\Large{\MakeTextUppercase{\insertframetitle}}}%
+    \end{beamercolorbox}%
+    \ifx\insertframesubtitle\@empty\else%
+        \par\hspace*{30pt}%
+        \begin{beamercolorbox}[dp=0.2cm, wd=\dimexpr\paperwidth - 3.1cm\relax]{framesubtitle}
+            \textit{\large\insertframesubtitle}
+        \end{beamercolorbox}%
+    \fi%
+    \par
 }
 
 % By default, use the default UH title for every frame
