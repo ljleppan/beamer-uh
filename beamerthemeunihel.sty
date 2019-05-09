@@ -6,6 +6,7 @@
 \RequirePackage{xcolor}  % \colorlet depends on xcolor
 \RequirePackage{etoolbox}  % Needed for switching between frame layouts
 \RequirePackage{tikz}
+\RequirePackage[overload]{textcase}  % Better uppercasing for titles
 
 % Define the official university colours, one for each faculty
 % These are all given a name so they can be easily used in presentations
@@ -121,11 +122,21 @@
 % Its colour is defined by the colour "background"
 % It's called "grey background", so you can position things relative to it
 %  using that name
-\usebackgroundtemplate{%
+\setbeamertemplate{background canvas}{%
   \parbox[c][0.9\paperheight][c]{\paperwidth}{%
     \centering %
     \tikz[remember picture] %
       \node (grey background) [text width=0.931\paperwidth, text height=0.803\paperheight, fill=background] {};%
+  }%
+}
+
+% Empty version
+% Still need to define the grey box, even though it's invisible
+\defbeamertemplate{background canvas}{plain}{
+  \parbox[c][0.9\paperheight][c]{\paperwidth}{%
+    \centering %
+    \tikz[remember picture] %
+      \node (grey background) [text width=0.931\paperwidth, text height=0.803\paperheight] {};%
   }%
 }
 
@@ -163,7 +174,7 @@
 \newcommand{\showframenums}{\@hideframenumsfalse}
 
 % Template for the footer, present on all pages
-\setbeamertemplate{footline}{
+\defbeamertemplate{footline}{normal}{
   \begin{beamercolorbox}[leftskip=.3cm,rightskip=.3cm]{author in head/foot}%
     \vspace*{0.1cm}%
     \parbox[b]{3.5cm}{\parindent = 0pt
@@ -176,6 +187,15 @@
     \vspace*{0.1cm}
   \end{beamercolorbox}
 }
+
+% Template for an empty footer, can be selected for handouts
+\defbeamertemplate{footline}{plain}{
+  \begin{beamercolorbox}[leftskip=.3cm,rightskip=.3cm]{author in head/foot}%
+  \end{beamercolorbox}
+}
+
+\setbeamertemplate{footline}[nomal]
+
 
 % Template for the non-title frames' header
 % Default as the template named "default" so that we can easily switch
