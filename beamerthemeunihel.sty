@@ -8,6 +8,12 @@
 \RequirePackage{tikz}
 \RequirePackage[overload]{textcase}  % Better uppercasing for titles
 
+% Funding
+\newcommand{\funding}[2][]{%
+    \def\fundingIcon{#1}
+    \def\funding{#2}
+}
+
 % Define the official university colours, one for each faculty
 % These are all given a name so they can be easily used in presentations
 % The colour "fac" is defined as the current faculty's colour,
@@ -164,8 +170,23 @@
         \textbf{\large{\MakeUppercase \insertsubtitle}}\\
         \vspace{.3cm}
         \footnotesize{\insertauthor}
+        \vspace{.3cm}
+        
     \end{center}
     \vfill
+    \ifx%
+        \fundingIcon \undefined %
+        \else %
+            \IfFileExists{\fundingIcon}%
+            {\includegraphics[width=1.5cm]{\fundingIcon}}%
+            {}%
+        \fi
+    \ifx 
+        \funding @empty@ % 
+        \else %
+            \hfill\tiny{\parbox[b]{0.45\textwidth}{\noindent\funding{}}} %
+        \fi
+    \vspace{0.2cm}
 }
 
 \newif\if@hideframenums
