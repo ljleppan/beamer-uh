@@ -1,9 +1,18 @@
-% Leo Leppänen, 2018-04-16
-% version 1.1.0
+% Leo Leppänen, 2019-05-11
+% version 1.2.0
 
 \mode<presentation>
 
 \RequirePackage{xcolor}  % \colorlet depends on xcolor
+\RequirePackage{etoolbox}  % Needed for switching between frame layouts
+\RequirePackage{tikz}
+\RequirePackage[overload]{textcase}  % Better uppercasing for titles
+
+% Funding
+\newcommand{\funding}[2][]{%
+    \def\fundingIcon{#1}
+    \def\funding{#2}
+}
 
 % Define the official university colours, one for each faculty
 % These are all given a name so they can be easily used in presentations
@@ -37,59 +46,61 @@
 % Swedish School of Social Sciences
 \definecolor{fac sockom}{RGB}{230,51,117}
 
+\definecolor{background}{RGB}{244,244,244}
+
 
 % Different flames (logos)
-\def\flamefile{images/uh-general.png}
+\def\flamefile{images/uh-general-trim.png}
 \colorlet{fac}{uh silver}
 \DeclareOptionBeamer{general}{
-  \def\flamefile{images/uh-general.png}
+  \def\flamefile{images/uh-general-trim.png}
 }
 \DeclareOptionBeamer{agri}{
-  \def\flamefile{images/uh-agri.png}
+  \def\flamefile{images/uh-agri-trim.png}
   \colorlet{fac}{fac agri}
 }
 \DeclareOptionBeamer{arts}{
-  \def\flamefile{images/uh-arts.png}
+  \def\flamefile{images/uh-arts-trim.png}
   \colorlet{fac}{fac arts}
 }
 \DeclareOptionBeamer{behav}{
-  \def\flamefile{images/uh-behav.png}
+  \def\flamefile{images/uh-behav-trim.png}
   \colorlet{fac}{fac behav}
 }
 \DeclareOptionBeamer{bio}{
-  \def\flamefile{images/uh-bio.png}
+  \def\flamefile{images/uh-bio-trim.png}
   \colorlet{fac}{fac bio}
 }
 \DeclareOptionBeamer{law}{
-  \def\flamefile{images/uh-law.png}
+  \def\flamefile{images/uh-law-trim.png}
   \colorlet{fac}{fac law}
 }
 \DeclareOptionBeamer{med}{
-  \def\flamefile{images/uh-med.png}
+  \def\flamefile{images/uh-med-trim.png}
   \colorlet{fac}{fac med}
 }
 \DeclareOptionBeamer{pharm}{
-  \def\flamefile{images/uh-pharm.png}
+  \def\flamefile{images/uh-pharm-trim.png}
   \colorlet{fac}{fac pharm}
 }
 \DeclareOptionBeamer{sci}{
-  \def\flamefile{images/uh-sci.png}
+  \def\flamefile{images/uh-sci-trim.png}
   \colorlet{fac}{fac sci}
 }
 \DeclareOptionBeamer{soc}{
-  \def\flamefile{images/uh-soc.png}
+  \def\flamefile{images/uh-soc-trim.png}
   \colorlet{fac}{fac soc}
 }
 \DeclareOptionBeamer{sockom}{
-  \def\flamefile{images/uh-sockom.png}
+  \def\flamefile{images/uh-sockom-trim.png}
   \colorlet{fac}{fac sockom}
 }
 \DeclareOptionBeamer{theo}{
-  \def\flamefile{images/uh-theo.png}
+  \def\flamefile{images/uh-theo-trim.png}
   \colorlet{fac}{fac theo}
 }
 \DeclareOptionBeamer{vet}{
-  \def\flamefile{images/uh-vet.png}
+  \def\flamefile{images/uh-vet-trim.png}
   \colorlet{fac}{fac vet}
 }
 
@@ -113,44 +124,69 @@
 \setbeamertemplate{itemize subsubitem}[dash]
 
 % Grey slide background
-\usebackgroundtemplate{
-  \parbox[c][0.9\paperheight][c]{\paperwidth}{\centering\includegraphics[width=0.95\paperwidth, height=0.83\paperheight]{images/background.png}}
+% This is created by a big filled tikz node
+% Its colour is defined by the colour "background"
+% It's called "grey background", so you can position things relative to it
+%  using that name
+\setbeamertemplate{background canvas}{%
+  \parbox[c][0.9\paperheight][c]{\paperwidth}{%
+    \centering %
+    \tikz[remember picture] %
+      \node (grey background) [text width=0.931\paperwidth, text height=0.803\paperheight, fill=background] {};%
+  }%
 }
 
-% Required for flame positioning
-\usepackage{textpos}
+% Empty version
+% Still need to define the grey box, even though it's invisible
+\defbeamertemplate{background canvas}{plain}{
+  \parbox[c][0.9\paperheight][c]{\paperwidth}{%
+    \centering %
+    \tikz[remember picture] %
+      \node (grey background) [text width=0.931\paperwidth, text height=0.803\paperheight] {};%
+  }%
+}
 
 % Flame, as used in normal slides
-\newcommand{\flame}{
-  \setlength{\TPHorizModule}{1pt}
-  \setlength{\TPVertModule}{1pt}
-  \begin{textblock}{10}(-25,-25)
-    \includegraphics[width=75pt,height=75pt]{\flamefile}
-  \end{textblock}
-}
+% Declare a PGF image to reduce file size and processing times
+\pgfdeclareimage[width=2.05cm]{normal flame}{\flamefile}
+\newcommand{\flame}{\pgfuseimage{normal flame}}
 
 % Flame, as used in the title slide
-\newcommand{\titleflame}{
-  \setlength{\TPHorizModule}{1pt}
-  \setlength{\TPVertModule}{1pt}
-  \begin{textblock}{10}(-25,-2)
-    \includegraphics[width=75pt,height=75pt]{\flamefile}
-  \end{textblock}
-}
+\pgfdeclareimage[width=3.21cm]{title flame}{\flamefile}
+\newcommand{\titleflame}{\pgfuseimage{title flame}}
 
 % Template for the title page
 \setbeamertemplate{title page}{
-  \titleflame
-  \vfill
-  \vspace{2cm}
-  \begin{center}
-    \textbf{\Large{\MakeUppercase \inserttitle}}\\
-    \vspace{.3cm}
-    \textbf{\large{\MakeUppercase \insertsubtitle}}\\
-    \vspace{.3cm}
-    \footnotesize{\insertauthor}
-  \end{center}
-  \par\vfill
+    % Place the flame in the top left corner
+    \tikz[overlay, remember picture]
+        \node[outer sep=0cm, inner sep=0cm, anchor=north west, xshift=0.3cm, yshift=-0.325cm]
+            at (current page.north west)
+            {\titleflame};
+    \vspace{2.6cm}
+    \vfil
+    \begin{center}
+        \textbf{\Large{\MakeUppercase \inserttitle}}\\
+        \vspace{.3cm}
+        \textbf{\large{\MakeUppercase \insertsubtitle}}\\
+        \vspace{.3cm}
+        \footnotesize{\insertauthor}
+        \vspace{.3cm}
+
+    \end{center}
+    \vfill
+    \ifx%
+        \fundingIcon \undefined %
+        \else %
+            \IfFileExists{\fundingIcon}%
+            {\includegraphics[width=1.5cm]{\fundingIcon}}%
+            {}%
+        \fi
+    \ifx
+        \funding @empty@ %
+        \else %
+            \hfill\tiny{\parbox[b]{0.45\textwidth}{\noindent\funding{}}} %
+        \fi
+    \vspace{0.2cm}
 }
 
 \newif\if@hideframenums
@@ -159,38 +195,111 @@
 \newcommand{\showframenums}{\@hideframenumsfalse}
 
 % Template for the footer, present on all pages
-\setbeamertemplate{footline}{
-  \begin{beamercolorbox}[leftskip=.3cm,rightskip=.3cm]{author in head/foot}
-    \vspace*{0.1cm}
-    \textbf{HELSINGIN YLIOPISTO} \newline \vspace*{0.1cm}
-    \textbf{HELSINGFORS UNIVERSITET} \newline \vspace*{0.2cm}
-    \textbf{UNIVERSITY OF HELSINKI} \hfill \insertinstitute \hfill \insertshortauthor \hfill \insertdate \hfill \if@hideframenums\relax\else\insertframenumber / \inserttotalframenumber\fi
+\defbeamertemplate{footline}{normal}{
+  \begin{beamercolorbox}[leftskip=.3cm,rightskip=.3cm]{author in head/foot}%
+    \vspace*{0.1cm}%
+    \parbox[b]{3.5cm}{\parindent = 0pt
+        \textbf{HELSINGIN YLIOPISTO} \vspace*{0.05cm}\newline%
+        \textbf{HELSINGFORS UNIVERSITET} \vspace*{0.05cm}\newline%
+        \textbf{UNIVERSITY OF HELSINKI}
+    }%
+    \insertshortinstitute \hfill \insertshortauthor \hfill \insertdate \hfill \if@hideframenums\relax\else\insertframenumber{}/\inserttotalframenumber\fi%
     \par
     \vspace*{0.1cm}
   \end{beamercolorbox}
 }
 
-% Template for the non-title frames' header
-\usepackage{textcase,regexpatch}
-\setbeamertemplate{frametitle}{
-  \makeatletter %from https://tex.stackexchange.com/a/149238
-  \regexpatchcmd{\insertframetitle}
-    {(\c{usebeamertemplate}.*)\c{fi}}
-    {\c{NoCaseChange}\cB\{\1\cE\}\c{fi}}
-    {}{}%
-  \makeatother
-  \vspace{1cm}
-  \flame\hspace*{50pt}
-  \begin{beamercolorbox}[dp=0.3cm, wd=\dimexpr\paperwidth - 3.3cm\relax]{frametitle}
-    \textbf{\Large{\MakeTextUppercase{\insertframetitle}}}
-  \end{beamercolorbox}%
-  \par\hspace*{55pt}%
-  \begin{beamercolorbox}[dp=0.2cm, wd=\dimexpr\paperwidth - 3.3cm\relax]{framesubtitle}
-    \ifx\insertframesubtitle\@empty\else%
-    \textit{\large\insertframesubtitle}
-    \fi%
+% Template for an empty footer, can be selected for handouts
+\defbeamertemplate{footline}{plain}{
+  \begin{beamercolorbox}[leftskip=.3cm,rightskip=.3cm]{author in head/foot}%
   \end{beamercolorbox}
 }
+
+\setbeamertemplate{footline}[normal]
+
+
+% Template for the non-title frames' header
+% Default as the template named "default" so that we can easily switch
+% between this and other templates
+\usepackage{textcase,regexpatch}
+\defbeamertemplate{frametitle}{uhdefault}{%
+    % Place the flame at the top left corner of the grey box
+    \tikz[overlay, remember picture]
+        \node[outer sep=0cm, inner sep=0cm, anchor=north west] at (grey background.north west)
+            {\flame};%
+    \makeatletter %from https://tex.stackexchange.com/a/149238
+    \regexpatchcmd{\insertframetitle}
+        {(\c{usebeamertemplate}.*)\c{fi}}
+        {\c{NoCaseChange}\cB\{\1\cE\}\c{fi}}
+        {}{}%
+    \makeatother%
+    \vskip 0.5cm%
+    \hspace*{45pt}%
+    \begin{beamercolorbox}[dp=0.3cm, wd=\dimexpr\paperwidth - 3.6cm\relax]{frametitle}
+        \textbf{\Large{\MakeTextUppercase{\insertframetitle}}}%
+    \end{beamercolorbox}%
+    \ifx\insertframesubtitle\@empty\else%
+        \par%
+        \hspace*{45pt}%
+        \begin{beamercolorbox}[dp=0.2cm, wd=\dimexpr\paperwidth - 3.6cm\relax]{framesubtitle}
+            \textit{\large\insertframesubtitle}
+        \end{beamercolorbox}%
+    \fi%
+    \par
+}
+\setbeamertemplate{frametitle}[uhdefault]
+
+
+
+% Flame, small version
+\pgfdeclareimage[width=45pt]{small flame}{\flamefile}
+\newcommand{\smallflame}{\pgfuseimage{small flame}}
+
+
+
+% Define another beamer template for the title, so
+% that we can select a version with a smaller flame
+% to give us more space.
+% Use key "smalltitle" to select for a frame
+\defbeamertemplate{frametitle}{smalltitle}{%
+    % Place the flame at the top left corner of the grey box
+    \tikz[overlay, remember picture]
+        \node[outer sep=0cm, inner sep=0cm, anchor=north west] at (grey background.north west)
+            {\smallflame};%
+    \makeatletter %from https://tex.stackexchange.com/a/149238
+    \regexpatchcmd{\insertframetitle}%
+        {(\c{usebeamertemplate}.*)\c{fi}}
+        {\c{NoCaseChange}\cB\{\1\cE\}\c{fi}}
+        {}{}%
+    \makeatother%
+    \vskip 0.17cm%
+    \hspace*{30pt}%
+    \begin{beamercolorbox}[dp=0.3cm, wd=\dimexpr\paperwidth - 3.1cm\relax]{frametitle}
+        \textbf{\Large{\MakeTextUppercase{\insertframetitle}}}%
+    \end{beamercolorbox}%
+    \ifx\insertframesubtitle\@empty\else%
+        \par\hspace*{30pt}%
+        \begin{beamercolorbox}[dp=0.2cm, wd=\dimexpr\paperwidth - 3.1cm\relax]{framesubtitle}
+            \textit{\large\insertframesubtitle}
+        \end{beamercolorbox}%
+    \fi%
+    \par
+}
+
+% By default, use the default UH title for every frame
+\BeforeBeginEnvironment{frame}{%
+  \setbeamertemplate{frametitle}[uhdefault]%
+}
+
+% Define the frame key to select the smalltitle version
+\makeatletter
+\define@key{beamerframe}{smalltitle}[true]{%
+    \setbeamertemplate{frametitle}[smalltitle]%
+}
+\makeatother
+
+
+
 
 % Adjust footnote position
 \addtobeamertemplate{footnote}{}{\vspace{2ex}}
@@ -206,7 +315,11 @@
 
 % Set blocks to use the faculty's colour in the title
 \setbeamercolor{block title}{use=structure,fg=white,bg=fac}
+\setbeamercolor{block title example}{parent=normal,fg=white,bg=fac}
 \setbeamercolor{block body}{use=structure,fg=black,bg=white}
+\setbeamercolor{block body example}{parent=normal,fg=black,bg=white}
+
+\setbeamerfont{block title}{size=\footnotesize}
 
 
 \mode
