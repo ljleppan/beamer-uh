@@ -181,8 +181,14 @@
   \makeatother
   \vspace{1cm}
   \flame\hspace*{50pt}
-  \begin{beamercolorbox}[dp=0.5cm, wd=\dimexpr\paperwidth - 3.3cm\relax]{frametitle}
+  \begin{beamercolorbox}[dp=0.3cm, wd=\dimexpr\paperwidth - 3.3cm\relax]{frametitle}
     \textbf{\Large{\MakeTextUppercase{\insertframetitle}}}
+  \end{beamercolorbox}%
+  \par\hspace*{55pt}%
+  \begin{beamercolorbox}[dp=0.2cm, wd=\dimexpr\paperwidth - 3.3cm\relax]{framesubtitle}
+    \ifx\insertframesubtitle\@empty\else%
+    \textit{\large\insertframesubtitle}
+    \fi%
   \end{beamercolorbox}
 }
 
