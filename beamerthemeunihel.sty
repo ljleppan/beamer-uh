@@ -146,6 +146,29 @@
   }%
 }
 
+
+%% Renew the command that inserts an image of the slide into the notes
+% This is needed so we define the shape "grey background"
+% The background canvas is not drawn when doing this, so otherwise
+%  the shape is not drawn, so anything positioned relative to it goes wild
+\renewcommand{\insertslideintonotes}[1]{{%
+    \tikz[remember picture, overlay] {%
+        \pgflowlevel{\pgftransformscale{#1}}
+          \node (grey background) [text width=0.931\paperwidth, text height=0.803\paperheight, fill=background] at (current page.center) {};
+    }%
+  \begin{pgfpicture}{0cm}{0cm}{#1\paperwidth}{#1\paperheight}
+    \begin{pgflowlevelscope}{\pgftransformscale{#1}}%
+      \color{normal text.bg}
+      \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\paperwidth}{\paperheight}}
+      %\pgfusepath{fill}
+      \color{normal text.fg}
+      {\pgftransformshift{\pgfpoint{\beamer@origlmargin}{\footheight}}\pgftext[left,bottom]{\copy\beamer@frameboxcopy}}
+    \end{pgflowlevelscope}
+  \end{pgfpicture}%
+  }}
+
+
+
 % Flame, as used in normal slides
 % Declare a PGF image to reduce file size and processing times
 \pgfdeclareimage[width=2.05cm]{normal flame}{\flamefile}
