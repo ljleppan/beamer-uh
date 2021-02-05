@@ -128,23 +128,33 @@
 % Its colour is defined by the colour "background"
 % It's called "grey background", so you can position things relative to it
 %  using that name
+% There's a problem with positioning relative to the box:
+%  the background is rendered *after* the slide content, so
+%  you can't refer to the box itself on the slide.
+% Instead, we define the node for positioning at the start of
+%  each frame, then draw the coloured box on the background template.
+\def\@drawinvisiblebgbox{%
+    % The invisible background box, for positioning
+    \tikz[remember picture, overlay] %
+      \node (grey background) [text width=0.931\paperwidth, text height=0.803\paperheight,
+            anchor=north, yshift=-10pt, opacity=0]
+        at (current page.north) {};%
+}
+% We have nothing else in the headline
+% We draw the invisible box there. If you change the headline,
+%  include the \@drawinvisiblebgbox command
+\setbeamertemplate{headline}{%
+    \@drawinvisiblebgbox{}%
+}
 \setbeamertemplate{background canvas}{%
-  \parbox[c][0.9\paperheight][c]{\paperwidth}{%
-    \centering %
-    \tikz[remember picture] %
-      \node (grey background) [text width=0.931\paperwidth, text height=0.803\paperheight, fill=background] {};%
-  }%
+    % The visible grey box, positioned relative to the invisible one
+    \tikz[remember picture, overlay] %
+        \fill[fill=background] (grey background.north east) rectangle (grey background.south west);%
 }
 
 % Empty version
-% Still need to define the grey box, even though it's invisible
-\defbeamertemplate{background canvas}{plain}{
-  \parbox[c][0.9\paperheight][c]{\paperwidth}{%
-    \centering %
-    \tikz[remember picture] %
-      \node (grey background) [text width=0.931\paperwidth, text height=0.803\paperheight] {};%
-  }%
-}
+% Just don't draw the grey box: the invisible one is still there for positioning
+\defbeamertemplate{background canvas}{plain}{}
 
 
 %% Renew the command that inserts an image of the slide into the notes
@@ -180,6 +190,7 @@
 
 % Template for the title page
 \setbeamertemplate{title page}{
+    \@drawinvisiblebgbox{}%
     % Place the flame in the top left corner
     \tikz[overlay, remember picture]
         \node[outer sep=0cm, inner sep=0cm, anchor=north west, xshift=0.3cm, yshift=-0.325cm]
